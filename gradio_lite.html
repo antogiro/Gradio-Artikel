@@ -1,0 +1,45 @@
+<html>
+	<head>
+		<script type="module" crossorigin src="https://cdn.jsdelivr.net/npm/@gradio/lite/dist/lite.js"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@gradio/lite/dist/lite.css" />
+	</head>
+    <body>
+        <gradio-lite theme="dark">
+
+            import gradio as gr
+
+            # Define the calculation function based on the selected operation
+            def calculate(operation, num1, num2):
+                result = 0
+                if operation == "Addition":
+                    result = num1 + num2
+                elif operation == "Subtraction":
+                    result = num1 - num2
+                elif operation == "Multiplication":
+                    result = num1 * num2
+                elif operation == "Division":
+                    if num2 != 0:
+                        result = num1 / num2
+                    else:
+                        result = "Cannot divide by zero"
+                return result
+            
+            # Create the Gradio interface
+            iface = gr.Interface(
+                fn=calculate,
+                inputs=[
+                    gr.components.Dropdown(choices=["Addition", "Subtraction", "Multiplication", "Division"], label="Operation"),
+                    gr.components.Number(label="Number 1"),
+                    gr.components.Number(label="Number 2"),
+                ],
+                outputs=gr.components.Label(label="Output"),
+                live=True,
+                title="Simple Calculator",
+                description="Perform basic math operations.",
+            )
+            
+            # Launch the Gradio interface
+            iface.launch()
+        </gradio-lite>
+    </body>
+</html>
